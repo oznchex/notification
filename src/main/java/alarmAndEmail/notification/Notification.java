@@ -1,7 +1,10 @@
 package alarmAndEmail.notification;
 
 import alarmAndEmail.BaseEntity;
+import alarmAndEmail.member.Member;
 import jakarta.persistence.*;
+
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -11,6 +14,11 @@ public class Notification extends BaseEntity {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "notification_id")
     private Long id;
+
+    // 회원과 1대 다 관계이다.
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     // 삭제 여부
     @Column(name = "is_deleted")
