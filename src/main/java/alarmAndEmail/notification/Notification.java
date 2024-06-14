@@ -3,11 +3,19 @@ package alarmAndEmail.notification;
 import alarmAndEmail.BaseEntity;
 import alarmAndEmail.member.Member;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = PROTECTED)
 public class Notification extends BaseEntity {
 
     @Id
@@ -33,6 +41,29 @@ public class Notification extends BaseEntity {
     private String content;
 
     // 쪽지의 타입
-    @Column(name = "type")
-    private String type;
+    @Enumerated(value = STRING)
+    @Column(name = "notification_type")
+    private NotificationType notificationType;
+
+    public Notification(
+            final Long id,
+            final Member member,
+            final String content,
+            final NotificationType notificationType
+    ) {
+        this.id = id;
+        this.member = member;
+        this.isDeleted = false;
+        this.isRead = false;
+        this.content = content;
+        this.notificationType = notificationType;
+    }
+
+    public Notification(
+            final Member member,
+            final String content,
+            final NotificationType notificationType
+    ) {
+        this(null, member, content, notificationType);
+    }
 }

@@ -26,6 +26,9 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String email;
 
+    @Column
+    private String nickName;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
